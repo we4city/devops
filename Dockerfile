@@ -9,6 +9,18 @@ FROM centos:centos7
 MAINTAINER VM9 <vm9git@gmail.com>
 
 
+LABEL "com.github.actions.name"="VM9 DevOps"
+LABEL "com.github.actions.description"="DevOps container"
+LABEL "com.github.actions.icon"="refresh-cw"
+LABEL "com.github.actions.color"="green"
+
+LABEL version="1.0.0"
+LABEL repository="https://github.com/we4city/devops"
+LABEL homepage="https://vm9it.com/"
+LABEL maintainer="Leonan Carvalho <j.leonancarvalho@gmail.com>"
+
+
+
 ENV UID     100
 ENV GID     101
 ENV TIMEZONE            UTC
@@ -30,7 +42,12 @@ RUN yum -y update  && \
 RUN yum install -y java-1.8.0-openjdk perl git pcre-devel python-pip lighttpd lighttpd-fastcgi memcached  \
     gdal gdal-python npm openssl-devel mp boost sshpass
 
-RUN pip install awscli
+
+#AWS CLI
+# https://github.com/aws/aws-cli/blob/master/CHANGELOG.rst
+ENV AWSCLI_VERSION='1.18.14'
+
+RUN pip install --quiet --no-cache-dir awscli==${AWSCLI_VERSION}
 
 # KATALON http://docs.katalon.com/pages/viewpage.action?pageId=13697253
 RUN wget https://github.com/katalon-studio/katalon-studio/releases/download/v5.10.1/Katalon_Studio_Linux_64-5.10.1.tar.gz >/dev/null 2>&1 && \
