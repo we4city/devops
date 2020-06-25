@@ -1,0 +1,9 @@
+name: "VM9 Devops"
+description: "Realiza o Build do código"
+author: leonancarvalho
+runs:
+  using: docker
+  image: Dockerfile
+branding:
+  icon: refresh-cw
+  color: green
