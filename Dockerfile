@@ -30,7 +30,7 @@ RUN yum -y update  && \
 RUN yum install -y java-1.8.0-openjdk perl git pcre-devel python-pip lighttpd lighttpd-fastcgi memcached  \
     gdal gdal-python npm openssl-devel mp boost sshpass
 
-
+RUN pip install awscli
 
 # KATALON http://docs.katalon.com/pages/viewpage.action?pageId=13697253
 RUN wget https://github.com/katalon-studio/katalon-studio/releases/download/v5.10.1/Katalon_Studio_Linux_64-5.10.1.tar.gz >/dev/null 2>&1 && \
