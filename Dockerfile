@@ -73,5 +73,5 @@ RUN yum clean all && \
     rm -rf /var/cache/yum
 
 
-WORKDIR /var/www
-VOLUME /var/www
+ADD entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
