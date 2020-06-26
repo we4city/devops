@@ -32,14 +32,8 @@ RUN yum -y update  && \
 
 
 RUN yum install -y java-1.8.0-openjdk perl git pcre-devel python-pip lighttpd lighttpd-fastcgi memcached  \
-    gdal gdal-python npm openssl-devel mp boost sshpass
+    gdal gdal-python npm openssl-devel mp boost sshpass gcc gcc gcc-c++ cmake automake  gmp-devel boost pcre-dev
 
-
-#AWS CLI
-# https://github.com/aws/aws-cli/blob/master/CHANGELOG.rst
-ENV AWSCLI_VERSION='1.18.14'
-
-RUN pip install --quiet --no-cache-dir awscli==${AWSCLI_VERSION}
 
 # KATALON http://docs.katalon.com/pages/viewpage.action?pageId=13697253
 RUN wget https://github.com/katalon-studio/katalon-studio/releases/download/v5.10.1/Katalon_Studio_Linux_64-5.10.1.tar.gz >/dev/null 2>&1 && \
@@ -49,11 +43,11 @@ RUN wget https://github.com/katalon-studio/katalon-studio/releases/download/v5.1
     chmod 0777 /usr/bin/katalon && echo $(katalon -noSplash -runMode=console -consoleLog)
 
 # PHP
-RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm && \
-    yum install  -y php71w php71w-cli php71w-common php71w-fpm php71w-gd php71w-mbstring   \
-    php71w-mcrypt php71w-mysqlnd php71w-opcache php71w-pdo php71w-pear php71w-pecl-igbinary  \
-    php71w-process php71w-xml php71w-json php71w-soap zlib-dev libmemcached-devel   \
-    php71w-pecl-memcached php71w-devel php71w-pecl-mongodb php71w-intl
+RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+RUN yum install  -y php71w php71w-cli php71w-common php71w-fpm php71w-gd \
+    php71w-mbstring php71w-mcrypt php71w-mysqlnd php71w-opcache php71w-pdo php71w-pear php71w-pecl-igbinary \
+    php71w-process php71w-xml php71w-json php71w-soap zlib-dev libmemcached-devel php71w-pecl-memcached php71w-devel \
+    php71w-pecl-mongodb
 
 # Mosquitto
 RUN yum install mosquitto gcc make re2c mosquitto-devel  -y && \
@@ -65,9 +59,15 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     rm composer-setup.php -f && mv composer.phar /usr/bin/composer
 
 
-
 # NODE
 RUN  npm install -g grunt-cli
+
+
+#AWS CLI
+# https://github.com/aws/aws-cli/blob/master/CHANGELOG.rst
+ENV AWSCLI_VERSION='1.18.14'
+
+RUN pip install --quiet --no-cache-dir awscli==${AWSCLI_VERSION}
 
 RUN yum clean all && \
     rm -rf /var/cache/yum
