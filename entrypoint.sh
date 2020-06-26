@@ -1,19 +1,4 @@
-#!/bin/sh
-
-#test
-ls
-date
-echo $(cat VERSION)
-chmod 0777 ./tests/scripts/validate_version.sh
-./tests/scripts/validate_version.sh
-
-#Build Code
-npm version
-grunt --version
-npm update -f
-date
-uname -a
-pwd
+#!/bin/bash
 composer --working-dir=$(echo $(pwd)/src) update --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
+npm install
 grunt build_linux
-echo $(cat VERSION)
