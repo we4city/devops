@@ -1,13 +1,5 @@
 ####
-## Imagem usada no build do código
-## docker login --username=vm9dev --password=@dlink05
-## docker build -t vm9dev/devops:latest .
-## docker push vm9dev/devops:latest
-
-####
 FROM centos:centos7
-MAINTAINER VM9 <vm9git@gmail.com>
-
 
 LABEL "com.github.actions.name"="VM9 DevOps"
 LABEL "com.github.actions.description"="DevOps container"
