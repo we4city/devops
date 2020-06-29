@@ -31,8 +31,12 @@ RUN yum -y update  && \
     yum clean all
 
 
-RUN yum install -y java-1.8.0-openjdk perl git pcre-devel python-pip lighttpd lighttpd-fastcgi memcached  \
+RUN yum install -y java-1.8.0-openjdk perl pcre-devel python-pip lighttpd lighttpd-fastcgi memcached  \
     gdal gdal-python npm openssl-devel mp boost sshpass gcc gcc gcc-c++ cmake automake  gmp-devel boost pcre-dev
+    
+RUN yum -y remove git && rpm -U https://centos7.iuscommunity.org/ius-release.rpm && \
+    yum install -y git2u && \
+    git --version
 
 
 # KATALON http://docs.katalon.com/pages/viewpage.action?pageId=13697253
