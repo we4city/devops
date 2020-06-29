@@ -34,7 +34,7 @@ RUN yum install -y java-1.8.0-openjdk perl pcre-devel python-pip lighttpd lightt
     gdal gdal-python npm openssl-devel mp boost sshpass gcc gcc gcc-c++ cmake automake  gmp-devel boost pcre-dev
     
 RUN yum -y remove git && yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm && \
-    yum install -y git2u && \
+    yum install -y git && \
     git --version
 
 
