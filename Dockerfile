@@ -27,14 +27,13 @@ RUN rm -f /etc/localtime && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime &&
 
 RUN yum -y update  && \
     yum -y install epel-release  && \
-    yum -y install vim wget && \
-    yum clean all
+    yum -y install vim wget
 
 
 RUN yum install -y java-1.8.0-openjdk perl pcre-devel python-pip lighttpd lighttpd-fastcgi memcached  \
     gdal gdal-python npm openssl-devel mp boost sshpass gcc gcc gcc-c++ cmake automake  gmp-devel boost pcre-dev
     
-RUN yum -y remove git && rpm -U https://centos7.iuscommunity.org/ius-release.rpm && \
+RUN yum -y remove git && yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm && \
     yum install -y git2u && \
     git --version
 
