@@ -74,3 +74,6 @@ RUN pip install --quiet --no-cache-dir awscli==${AWSCLI_VERSION}
 
 RUN yum clean all && \
     rm -rf /var/cache/yum
+    
+ADD entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
