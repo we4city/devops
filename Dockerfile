@@ -22,8 +22,12 @@ ENV DEBUG true
 
 
 RUN rm -f /etc/localtime && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime &&\
- echo "${TIMEZONE}" > /etc/timezone
+    echo "${TIMEZONE}" > /etc/timezone
 
+# Update all .repo files
+RUN sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/CentOS-*.repo
+RUN sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/CentOS-*.repo
+RUN sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/CentOS-*.repo
 
 RUN yum -y update  && \
     yum -y install epel-release  && \
@@ -32,7 +36,7 @@ RUN yum -y update  && \
 
 RUN yum install -y java-1.8.0-openjdk perl pcre-devel python-pip lighttpd lighttpd-fastcgi memcached  \
     gdal gdal-python npm openssl-devel mp boost sshpass gcc gcc gcc-c++ cmake automake  gmp-devel boost pcre-dev
-    
+
 RUN yum -y remove git && yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm && \
     yum install -y git && \
     git --version
@@ -54,7 +58,7 @@ RUN yum install  -y php71w php71w-cli php71w-common php71w-fpm php71w-gd \
 
 # Mosquitto
 RUN yum install mosquitto gcc make re2c mosquitto-devel  -y && \
-     printf "\n" |pecl install  Mosquitto-beta && \
+    printf "\n" |pecl install  Mosquitto-beta && \
     echo "extension=mosquitto.so" > /etc/php.d/mosquitto.ini
 
 
@@ -74,6 +78,6 @@ RUN pip install --quiet --no-cache-dir awscli==${AWSCLI_VERSION}
 
 RUN yum clean all && \
     rm -rf /var/cache/yum
-    
+
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
