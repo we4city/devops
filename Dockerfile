@@ -31,15 +31,16 @@ RUN sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/CentOS-*.repo
 
 RUN yum -y update  && \
     yum -y install epel-release  && \
-    yum -y install vim wget
-
+    yum -y install vim wget \
+    yum -y install git && \
+    git --version
 
 RUN yum install -y java-1.8.0-openjdk perl pcre-devel python-pip lighttpd lighttpd-fastcgi memcached  \
     gdal gdal-python npm openssl-devel mp boost sshpass gcc gcc gcc-c++ cmake automake  gmp-devel boost pcre-dev
 
-RUN yum -y remove git && yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm && \
-    yum install -y git && \
-    git --version
+# RUN yum -y remove git && yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm && \
+#     yum install -y git && \
+#     git --version
 
 
 # KATALON http://docs.katalon.com/pages/viewpage.action?pageId=13697253
@@ -67,14 +68,11 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 
 
 # NODE
-RUN  npm install -g grunt-cli
+RUN npm install -g grunt-cli
 
-
-#AWS CLI
-# https://github.com/aws/aws-cli/blob/master/CHANGELOG.rst
-ENV AWSCLI_VERSION='1.18.14'
-
-RUN pip install --quiet --no-cache-dir awscli==${AWSCLI_VERSION}
+# Install AWS CLI
+RUN yum install -y python3-pip && \
+    pip3 install --quiet --no-cache-dir awscli
 
 RUN yum clean all && \
     rm -rf /var/cache/yum
